@@ -1,5 +1,10 @@
 <?php
 
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\TableController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WaiterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +24,13 @@ Route::get('/', function () {
 Route::get('/hello', function () {
     return view('hello');
 });
+Route::get('/restaurant', [RestaurantController::class, 'index']);
+Route::get('/restaurant/{id}', [RestaurantController::class, 'show']);
+Route::get('/table', [TableController::class, 'index']);
+Route::get('/table/{id}', [TableController::class, 'show']);
+Route::get('/reservation', [ReservationController::class, 'index']);
+Route::get('/reservation/{id}', [ReservationController::class, 'show']);
+Route::get('/waiter', [WaiterController::class, 'index']);
+Route::get('/waiter/{id}', [WaiterController::class, 'show']);
+Route::get('/user', [UserController::class, 'index']);
+Route::get('/user/{id}', [UserController::class, 'show']);
