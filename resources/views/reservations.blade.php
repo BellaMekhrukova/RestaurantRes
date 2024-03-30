@@ -24,6 +24,9 @@
             <td>{{$reservation->table->number}}</td>
             <td>{{$reservation->dateandtime}}</td>
             <td>{{$reservation->waiter->lastname}}</td>
+            <td><a href="{{url('reservation/destroy/'.$reservation->id)}}">Удалить</a>
+                <a href="{{url('reservation/edit/'.$reservation->id)}}">Редактировать</a>
+            </td>
         </tr>
 
     @endforeach
