@@ -13,10 +13,11 @@ class ReservationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $perpage = $request->perpage ?? 2;
         return view('reservations',[
-            'reservations' => Reservation:: all()
+            'reservations' => Reservation::paginate($perpage)->withQueryString()
         ]);
     }
 

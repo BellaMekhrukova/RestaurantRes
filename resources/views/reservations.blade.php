@@ -28,8 +28,8 @@
                 <a href="{{url('reservation/edit/'.$reservation->id)}}">Редактировать</a>
             </td>
         </tr>
-
     @endforeach
 </table>
+{{ $reservations->links() }}
 </body>
 </html>
