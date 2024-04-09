@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Models\User;
 use App\Models\Waiter;
+use Illuminate\Support\Facades\Gate;
 
 class ReservationController extends Controller
 {
@@ -101,11 +102,10 @@ class ReservationController extends Controller
     public function destroy(string $id)
     {
         if (! Gate::allows('destroy-reservation', Reservation::all()->where('id', $id)->first())) {
-            return redirect('/error')->with('message',
-            'У вас нет разрешения на удаление бронирования номер'. $id);
+            return redirect('/error')->withErrors(['error'=> 'У вас нет разрешения на удаления данного бронирования ' . $id]);
         }
         Reservation::destroy($id);
-        return redirect('/reservation');
+        return redirect('/reservation')->withErrors(['success'=>'Бронирование успешно удалено!']);;
 
     }
 }

@@ -1,36 +1,45 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-@if($user)
-    <h2>Здравствуйте,{{$user->name}}</h2>
-    <a href="{{url('logout')}}">Выйти из системы</a>
-@else
-    <h2>Вход в систему</h2>
-    <form method="post" action={{url('auth')}}/>
-    @csrf
-    <label>E-mail</label>
-    <input type="text" name="email" value="{{ old('email') }}"/>
-    @error('email')
-    <div class="is-invalid">{{ $message }}</div>
-    @enderror
-    <br>
-    <label>Пароль</label>
-    <input type="password" name="password" value="{{ old('password') }}"/>
-    @error('password')
-    <div class="is-invalid">{{ $message }}</div>
-    @enderror
-    <br>
-    <input type="submit">
-    @error('error')
-    <div class="is-invalid">{{ $message }}</div>
-    @enderror
-@endif
-</body>
-</html><?php
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="#">Laravel Project</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item dropdown"> <!-- Добавляем класс dropdown -->
+                        <a class="nav-link dropdown-toggle active" aria-current="page" data-bs-toggle="dropdown" href="{{url('reservation')}}">Бронирование</a>
+                        <ul class="dropdown-menu"> <!-- Добавляем класс dropdown-menu -->
+                            <li><a class="dropdown-item" href="{{url('table')}}">Столы</a></li>
+                            <li><a class="dropdown-item" href="{{url('restaurant')}}">Рестораны</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{url('reservation')}}">Все бронирования</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{url('waiter')}}">Официанты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{url('reservation/create')}}">Создать бронь</a>
+                    </li>
+                </ul>
+                @if(!Auth::user())
+                    <form class="d-flex" method="post" action="{{url('auth')}}">
+                        @csrf
+                        <input class="form-control me-2" type="text" placeholder="Логин" name="email" aria-label="Логин" value="{{ old('email') }}">
+                        <input class="form-control me-2" type="password" placeholder="Пароль" name="password" aria-label="Пароль" value="{{ old('password') }}">
+                        <button class="btn btn-outline-success" type="submit">Войти</button>
+                    </form>
+                @else
+                    <ul class="navbar-nav">
+                        <a class="nav-link text-white active" href="#"><i class="fa fa-user" style="font-size:20px;color:white;"></i>
+                            <span>  </span>{{ Auth::user()->name }}</a>
+                        <a class="btn btn-outline-success my-2 my-sm-0" href="{{url('logout')}}">Выйти</a>
+                    </ul>
+                @endif
+            </div>
+        </div>
+    </nav>
+</header>

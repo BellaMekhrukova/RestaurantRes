@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 
+use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
