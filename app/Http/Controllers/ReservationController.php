@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Models\Table;
 use App\Models\User;
@@ -16,11 +17,24 @@ class ReservationController extends Controller
      */
     public function index(Request $request)
     {
-        $perpage = $request->perpage ?? 2;
-        return view('reservations',[
-            'reservations' => Reservation::paginate($perpage)->withQueryString()
-        ]);
+        // Получаем все рестораны
+        $restaurants = Restaurant::all();
+
+        // Создаем массив для хранения бронирований по ресторанам
+        $reservationsByRestaurant = [];
+
+        // Для каждого ресторана получаем его бронирования и добавляем в массив
+        foreach ($restaurants as $restaurant) {
+            // Получаем бронирования для текущего ресторана
+            $reservations = $restaurant->reservations()->paginate($request->perpage ?? 2);
+            // Добавляем бронирования в массив, используя имя ресторана в качестве ключа
+            $reservationsByRestaurant[$restaurant->restaurantname] = $reservations;
+        }
+
+        // Возвращаем представление, передавая данные
+        return view('reservations', compact('reservationsByRestaurant'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -45,10 +59,17 @@ class ReservationController extends Controller
             'waiter_id' => 'required|integer',
             'dateandtime' => 'required'
         ]);
+
         $reservation = new Reservation($validated);
+
+        $reservation->restaurant_id = $request->input('restaurant_id');
+
+
         $reservation->save();
+
         return redirect('/reservation');
     }
+
 
     /**
      * Display the specified resource.

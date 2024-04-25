@@ -1,31 +1,53 @@
 @extends('layout')
+<link rel="stylesheet" href="{{ asset('resources/css/styles.css') }}">
 @section('content')
-<body>
-<div class="container">
-    <h2>Список ресторанов:</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>id</th>
-            <th>Наименование ресторана</th>
-            <th>Адрес</th>
-            <th>Номер телефона</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach($restaurants as $restaurant)
-            <tr>
-                <td>{{$restaurant->id}}</td>
-                <td>{{$restaurant->restaurantname}}</td>
-                <td>{{$restaurant->address}}</td>
-                <td>{{$restaurant->phonenumber}}</td>
-            </tr>
+    <style>
+        .restaurant-image {
+            height: 300px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        h2 {
+            color: white
+        }
+    </style>
+    <div class="container">
+        <h2 class="text-center mt-4 mb-4">Список ресторанов:</h2>
+
+        <!-- Форма для выбора типа кухни -->
+        <form action="{{ route('restaurants') }}" method="GET" class="mb-4">
+            <div class="form-group">
+                <label for="cuisine">Выберите тип кухни:</label>
+                <select name="cuisine" id="cuisine" class="form-control">
+                    <option value="">Все кухни</option>
+                    @foreach($cuisines as $cuisine)
+                        <option value="{{ $cuisine }}">{{ $cuisine }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Применить фильтр</button>
+        </form>
+
+        <!-- Отображение отфильтрованных ресторанов -->
+        @foreach($restaurantsByCuisine as $cuisine => $restaurants)
+            <h3>{{ $cuisine }}</h3>
+            <div class="row">
+                @foreach($restaurants as $restaurant)
+                    <div class="col-md-6 mb-4">
+                        <div class="card">
+                            <a href="{{url('reservation/create')}}?restaurant_id={{ $restaurant->id }}"><img src="{{$restaurant->photo}}"
+                                                                                                             class="card-img-top img-thumbnail restaurant-image"
+                                                                                                             alt="Изображение ресторана"></a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{$restaurant->restaurantname}}</h5>
+                                <p class="card-text">{{$restaurant->address}}</p>
+                                <p class="card-text">{{$restaurant->phonenumber}}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         @endforeach
-        </tbody>
-    </table>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+    </div>
 @endsection

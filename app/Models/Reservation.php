@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Reservation extends Model
 {
     use HasFactory;
-    protected $fillable = ['table_id', 'waiter_id', 'user_id', 'id','dateandtime'];
+    protected $fillable = ['table_id', 'waiter_id', 'user_id', 'id','dateandtime', 'restaurant_id'];
     public $timestamps = false;
     public function table(): BelongsTo
     {

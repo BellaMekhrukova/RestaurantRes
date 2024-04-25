@@ -43,3 +43,4 @@ Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout']);
 Route::post('/auth', [LoginController::class, 'authenticate']);
 Route::get('/error', function () { return view('error', ['message'=> session('message')]);});
+Route::get('/restaurants', [RestaurantController::class, 'index'])->name('restaurants');

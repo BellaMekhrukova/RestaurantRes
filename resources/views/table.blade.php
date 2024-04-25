@@ -8,6 +8,8 @@
     <title>60501mik</title>
 </head>
 <body>
+<style>h2, td{color: white}</style>
+
 <h2>{{$table ? "Информация о столе № ".$table->number : 'Неверный ID стола' }}</h2>
 @if($table)
 <table border="1">

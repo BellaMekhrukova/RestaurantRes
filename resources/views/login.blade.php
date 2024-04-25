@@ -1,8 +1,9 @@
-
 <header>
+
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <style> .container-fluid{max-width: 80%}</style>
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#">Laravel Project</a>
+            <a class="navbar-brand text-white" href="#">Restoranno</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

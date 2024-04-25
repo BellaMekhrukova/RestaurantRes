@@ -6,6 +6,7 @@
     <h2>Добавление записи</h2>
     <form method="post" action="{{url('reservation')}}">
         @csrf
+        <input type="hidden" name="restaurant_id" value="{{ request()->query('restaurant_id') }}">
         <div class="form-group">
             <label for="table_id">Столик</label>
             <select class="form-control" id="table_id" name="table_id">
